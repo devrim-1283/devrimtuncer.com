@@ -113,8 +113,184 @@
 
     <!-- Tax Certificate -->
     <div class="mt-8 text-center">
-        <img src="{{ asset('vergi.png') }}?v={{ time() }}" alt="{{ __('messages.tax_certificate') }}" class="mx-auto max-w-md">
+        <img src="{{ asset('vergi.png') }}?v={{ time() }}" alt="{{ __('messages.tax_certificate') }}" class="mx-auto max-w-md rounded-xl shadow-lg">
     </div>
+
+    <!-- Gallery Section with Masonry Layout -->
+    @if($galleries->count() > 0)
+    <div class="mt-20">
+        <h2 class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            {{ app()->getLocale() === 'tr' ? 'Galeri' : 'Gallery' }}
+        </h2>
+        <div id="masonry-container" class="masonry-grid">
+            @foreach($galleries as $index => $gallery)
+            <div class="masonry-item" data-index="{{ $index }}" data-height="{{ rand(250, 600) }}">
+                <div class="masonry-item-inner">
+                    <img src="{{ storage_asset($gallery->image) }}" alt="{{ $gallery->name }}" class="masonry-image">
+                    <div class="masonry-overlay">
+                        <div class="masonry-content">
+                            <h3 class="text-xl font-bold text-white mb-2">{{ $gallery->name }}</h3>
+                            @if($gallery->description)
+                            <p class="text-sm text-gray-200">{{ $gallery->description }}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
 </div>
+
+@push('styles')
+<style>
+    .masonry-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    @media (min-width: 400px) {
+        .masonry-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 600px) {
+        .masonry-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (min-width: 1000px) {
+        .masonry-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    @media (min-width: 1500px) {
+        .masonry-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+
+    .masonry-item {
+        opacity: 0;
+        transform: translateY(100px);
+        filter: blur(10px);
+        transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+        will-change: opacity, transform, filter;
+    }
+
+    .masonry-item.loaded {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+
+    .masonry-item-inner {
+        position: relative;
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .masonry-item-inner:hover {
+        transform: scale(0.95);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .masonry-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .masonry-item-inner:hover .masonry-image {
+        transform: scale(1.1);
+    }
+
+    .masonry-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: flex-end;
+        padding: 20px;
+    }
+
+    .masonry-item-inner:hover .masonry-overlay {
+        opacity: 1;
+    }
+
+    .masonry-content {
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+
+    .masonry-item-inner:hover .masonry-content {
+        transform: translateY(0);
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const masonryItems = document.querySelectorAll('.masonry-item');
+    
+    // Preload all images
+    const imageUrls = Array.from(masonryItems).map(item => {
+        const img = item.querySelector('.masonry-image');
+        return img ? img.src : null;
+    }).filter(Boolean);
+
+    let imagesLoaded = 0;
+    const totalImages = imageUrls.length;
+
+    function checkAllImagesLoaded() {
+        if (imagesLoaded === totalImages) {
+            animateMasonryItems();
+        }
+    }
+
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.onload = img.onerror = () => {
+            imagesLoaded++;
+            checkAllImagesLoaded();
+        };
+        img.src = url;
+    });
+
+    function animateMasonryItems() {
+        masonryItems.forEach((item, index) => {
+            const height = item.getAttribute('data-height');
+            if (height) {
+                item.style.height = height + 'px';
+            }
+
+            setTimeout(() => {
+                item.classList.add('loaded');
+            }, index * 50);
+        });
+    }
+
+    // If no images, still animate
+    if (totalImages === 0) {
+        animateMasonryItems();
+    }
+});
+</script>
+@endpush
 @endsection
 

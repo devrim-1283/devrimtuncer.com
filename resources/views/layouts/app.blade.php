@@ -207,31 +207,39 @@
                 <div class="flex items-center space-x-3">
                     <!-- Language Dropdown -->
                     <div class="relative language-dropdown-container">
-                        <button id="languageToggle" class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <button type="button" id="languageToggle" class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                             @if(app()->getLocale() === 'tr')
-                            <svg class="w-6 h-5" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="900" height="600" fill="#E30A17"/>
-                                <circle cx="425" cy="300" r="120" fill="#fff"/>
-                                <circle cx="460" cy="300" r="100" fill="#E30A17"/>
-                                <polygon points="580,220 560,280 600,245 540,245 580,280" fill="#fff" transform="rotate(0 580 250)"/>
+                            <svg class="w-6 h-4" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="1200" height="800" fill="#E30A17"/>
+                                <circle cx="470" cy="400" r="200" fill="white"/>
+                                <circle cx="530" cy="400" r="160" fill="#E30A17"/>
+                                <polygon points="750,290 790,410 870,340 810,430 930,470 810,510 870,600 790,530 750,650 710,530 630,600 690,510 570,470 690,430 630,340 710,410" fill="white"/>
                             </svg>
                             @else
-                            <span class="flag-icon" style="background: linear-gradient(to bottom, #012169 0%, #012169 40%, #FFFFFF 40%, #FFFFFF 60%, #C8102E 60%); display: inline-block; width: 24px; height: 18px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); position: relative;">
-                                <span style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%), linear-gradient(-45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%);"></span>
-                            </span>
+                            <svg class="w-6 h-4" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+                                <clipPath id="s"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+                                <clipPath id="t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+                                <g clip-path="url(#s)">
+                                    <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                                    <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/>
+                                    <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                                    <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+                                </g>
+                            </svg>
                             @endif
                             <span class="text-sm font-semibold text-gray-700 uppercase">{{ app()->getLocale() }}</span>
                             <svg class="w-4 h-4 text-gray-600 transition-transform duration-300 language-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                        <div id="languageDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden language-dropdown opacity-0 invisible transition-all duration-300 transform translate-y-2 pointer-events-none">
+                        <div id="languageDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden language-dropdown opacity-0 invisible transition-all duration-300 transform translate-y-2 pointer-events-none z-50">
                             <a href="{{ str_replace('/' . app()->getLocale(), '/tr', request()->url()) }}" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-50 transition-colors duration-200 {{ app()->getLocale() === 'tr' ? 'bg-blue-50 border-l-4 border-blue-600' : '' }}">
-                                <svg class="w-6 h-5" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="900" height="600" fill="#E30A17"/>
-                                    <circle cx="425" cy="300" r="120" fill="#fff"/>
-                                    <circle cx="460" cy="300" r="100" fill="#E30A17"/>
-                                    <polygon points="580,220 560,280 600,245 540,245 580,280" fill="#fff" transform="rotate(0 580 250)"/>
+                                <svg class="w-6 h-4" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="1200" height="800" fill="#E30A17"/>
+                                    <circle cx="470" cy="400" r="200" fill="white"/>
+                                    <circle cx="530" cy="400" r="160" fill="#E30A17"/>
+                                    <polygon points="750,290 790,410 870,340 810,430 930,470 810,510 870,600 790,530 750,650 710,530 630,600 690,510 570,470 690,430 630,340 710,410" fill="white"/>
                                 </svg>
                                 <span class="text-sm font-semibold text-gray-700">Türkçe</span>
                                 @if(app()->getLocale() === 'tr')
@@ -241,9 +249,17 @@
                                 @endif
                             </a>
                             <a href="{{ str_replace('/' . app()->getLocale(), '/en', request()->url()) }}" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-50 transition-colors duration-200 {{ app()->getLocale() === 'en' ? 'bg-blue-50 border-l-4 border-blue-600' : '' }}">
-                                <span class="flag-icon" style="background: linear-gradient(to bottom, #012169 0%, #012169 40%, #FFFFFF 40%, #FFFFFF 60%, #C8102E 60%); display: inline-block; width: 24px; height: 18px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); position: relative;">
-                                    <span style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%), linear-gradient(-45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%);"></span>
-                                </span>
+                                <svg class="w-6 h-4" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+                                    <clipPath id="s2"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+                                    <clipPath id="t2"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+                                    <g clip-path="url(#s2)">
+                                        <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                                        <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t2)" stroke="#C8102E" stroke-width="4"/>
+                                        <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                                        <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+                                    </g>
+                                </svg>
                                 <span class="text-sm font-semibold text-gray-700">English</span>
                                 @if(app()->getLocale() === 'en')
                                 <svg class="w-5 h-5 text-blue-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
@@ -325,11 +341,11 @@
             <p class="text-xs font-semibold text-gray-500 uppercase mb-3">Language</p>
             <div class="space-y-2">
                 <a href="{{ str_replace('/' . app()->getLocale(), '/tr', request()->url()) }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 {{ app()->getLocale() === 'tr' ? 'bg-blue-50 border-2 border-blue-600' : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent' }}">
-                    <svg class="w-7 h-5" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" style="border-radius: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        <rect width="900" height="600" fill="#E30A17"/>
-                        <circle cx="425" cy="300" r="120" fill="#fff"/>
-                        <circle cx="460" cy="300" r="100" fill="#E30A17"/>
-                        <polygon points="580,220 560,280 600,245 540,245 580,280" fill="#fff" transform="rotate(0 580 250)"/>
+                    <svg class="w-7 h-5" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" style="border-radius: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        <rect width="1200" height="800" fill="#E30A17"/>
+                        <circle cx="470" cy="400" r="200" fill="white"/>
+                        <circle cx="530" cy="400" r="160" fill="#E30A17"/>
+                        <polygon points="750,290 790,410 870,340 810,430 930,470 810,510 870,600 790,530 750,650 710,530 630,600 690,510 570,470 690,430 630,340 710,410" fill="white"/>
                     </svg>
                     <span class="font-semibold text-gray-700 flex-1">Türkçe</span>
                     @if(app()->getLocale() === 'tr')
@@ -339,9 +355,17 @@
                     @endif
                 </a>
                 <a href="{{ str_replace('/' . app()->getLocale(), '/en', request()->url()) }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 {{ app()->getLocale() === 'en' ? 'bg-blue-50 border-2 border-blue-600' : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent' }}">
-                    <span class="flag-icon" style="background: linear-gradient(to bottom, #012169 0%, #012169 40%, #FFFFFF 40%, #FFFFFF 60%, #C8102E 60%); display: inline-block; width: 28px; height: 20px; border-radius: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); position: relative;">
-                        <span style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%), linear-gradient(-45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%);"></span>
-                    </span>
+                    <svg class="w-7 h-5" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" style="border-radius: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        <clipPath id="s3"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+                        <clipPath id="t3"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+                        <g clip-path="url(#s3)">
+                            <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                            <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t3)" stroke="#C8102E" stroke-width="4"/>
+                            <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                            <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+                        </g>
+                    </svg>
                     <span class="font-semibold text-gray-700 flex-1">English</span>
                     @if(app()->getLocale() === 'en')
                     <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">

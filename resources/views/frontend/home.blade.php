@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="min-h-screen">
-    <!-- Hero Section with Devrim's Photo -->
+    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 overflow-hidden">
         <!-- Decorative Background Elements -->
         <div class="absolute inset-0 overflow-hidden">
@@ -14,89 +14,72 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Left: Photo -->
-                <div class="flex justify-center lg:justify-end order-2 lg:order-1">
-                    <div class="relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl transform rotate-6 scale-105"></div>
-                        <img src="{{ asset('devrim.jpg') }}" alt="Devrim Tunçer" class="relative rounded-3xl shadow-2xl w-full max-w-md lg:max-w-lg object-cover" style="height: 600px;">
-                        <div class="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-4 transform rotate-3">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                <span class="text-sm font-semibold text-gray-700">Available for projects</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="text-center">
+                <h1 class="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent leading-tight">
+                    Merhaba!<br>Ben Devrim Tunçer
+                </h1>
+                <p class="text-2xl lg:text-3xl text-gray-700 mb-8 leading-relaxed">
+                    Size nasıl yardımcı olabilirim?
+                </p>
+                <p class="text-xl text-gray-600 mb-12 leading-relaxed max-w-3xl mx-auto">
+                    Freelance Full-Stack Developer olarak web uygulamaları, mobil projeler ve dijital çözümler geliştiriyorum. Modern teknolojiler kullanarak hayalinizdeki projeyi gerçeğe dönüştürebilirim.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-4 justify-center mb-12">
+                    <a href="{{ route('portfolio.index', ['locale' => app()->getLocale()]) }}" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+                        <span class="relative z-10 flex items-center">
+                            <i class="fas fa-briefcase mr-2"></i>
+                            Portfolyo
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                    </a>
+
+                    <a href="{{ route('about.index', ['locale' => app()->getLocale()]) }}" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-800 bg-white rounded-full overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-gray-200 hover:border-blue-600">
+                        <span class="relative z-10 flex items-center">
+                            <i class="fas fa-user mr-2"></i>
+                            Hakkımda
+                        </span>
+                    </a>
+
+                    <a href="{{ route('contact.index', ['locale' => app()->getLocale()]) }}" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-800 bg-white rounded-full overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-gray-200 hover:border-purple-600">
+                        <span class="relative z-10 flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            İletişime Geçin
+                        </span>
+                    </a>
                 </div>
 
-                <!-- Right: Content -->
-                <div class="text-center lg:text-left order-1 lg:order-2">
-                    <h1 class="text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent leading-tight">
-                        Merhaba!<br>Ben Devrim Tunçer
-                    </h1>
-                    <p class="text-xl lg:text-2xl text-gray-700 mb-8 leading-relaxed">
-                        Size nasıl yardımcı olabilirim?
-                    </p>
-                    <p class="text-lg text-gray-600 mb-12 leading-relaxed max-w-2xl">
-                        Freelance Full-Stack Developer olarak web uygulamaları, mobil projeler ve dijital çözümler geliştiriyorum. Modern teknolojiler kullanarak hayalinizdeki projeyi gerçeğe dönüştürebilirim.
-                    </p>
-
-                    <!-- CTA Buttons -->
-                    <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
-                        <a href="{{ route('portfolio.index', ['locale' => app()->getLocale()]) }}" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-                            <span class="relative z-10 flex items-center">
-                                <i class="fas fa-briefcase mr-2"></i>
-                                Portfolyo
-                            </span>
-                            <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                <!-- Social Links -->
+                <div>
+                    <p class="text-sm text-gray-500 mb-4">Sosyal Medya</p>
+                    <div class="flex gap-4 justify-center">
+                        @php
+                            $instagram = \App\Models\Setting::get('instagram_url');
+                            $linkedin = \App\Models\Setting::get('linkedin_url');
+                            $twitter = \App\Models\Setting::get('twitter_url');
+                            $github = \App\Models\Setting::get('github_url');
+                        @endphp
+                        @if($linkedin)
+                        <a href="{{ $linkedin }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-linkedin-in text-xl"></i>
                         </a>
-
-                        <a href="{{ route('about.index', ['locale' => app()->getLocale()]) }}" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-800 bg-white rounded-full overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-gray-200 hover:border-blue-600">
-                            <span class="relative z-10 flex items-center">
-                                <i class="fas fa-user mr-2"></i>
-                                Hakkımda
-                            </span>
+                        @endif
+                        @if($instagram)
+                        <a href="{{ $instagram }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-instagram text-xl"></i>
                         </a>
-
-                        <a href="{{ route('contact.index', ['locale' => app()->getLocale()]) }}" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-800 bg-white rounded-full overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-gray-200 hover:border-purple-600">
-                            <span class="relative z-10 flex items-center">
-                                <i class="fas fa-envelope mr-2"></i>
-                                İletişime Geçin
-                            </span>
+                        @endif
+                        @if($twitter)
+                        <a href="{{ $twitter }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter text-xl"></i>
                         </a>
-                    </div>
-
-                    <!-- Social Links -->
-                    <div class="mt-12">
-                        <p class="text-sm text-gray-500 mb-4">Sosyal Medya</p>
-                        <div class="flex gap-4 justify-center lg:justify-start">
-                            @php
-                                $instagram = \App\Models\Setting::get('instagram_url');
-                                $linkedin = \App\Models\Setting::get('linkedin_url');
-                                $twitter = \App\Models\Setting::get('twitter_url');
-                                $github = \App\Models\Setting::get('github_url');
-                            @endphp
-                            @if($linkedin)
-                            <a href="{{ $linkedin }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:scale-110">
-                                <i class="fab fa-linkedin-in text-xl"></i>
-                            </a>
-                            @endif
-                            @if($instagram)
-                            <a href="{{ $instagram }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all duration-300 transform hover:scale-110">
-                                <i class="fab fa-instagram text-xl"></i>
-                            </a>
-                            @endif
-                            @if($twitter)
-                            <a href="{{ $twitter }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all duration-300 transform hover:scale-110">
-                                <i class="fab fa-twitter text-xl"></i>
-                            </a>
-                            @endif
-                            @if($github)
-                            <a href="{{ $github }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-800 hover:text-white transition-all duration-300 transform hover:scale-110">
-                                <i class="fab fa-github text-xl"></i>
-                            </a>
-                            @endif
-                        </div>
+                        @endif
+                        @if($github)
+                        <a href="{{ $github }}" target="_blank" class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-800 hover:text-white transition-all duration-300 transform hover:scale-110">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -31,6 +31,10 @@ class AboutController extends Controller
             'why_me_en' => Setting::get('why_me_en'),
         ];
 
-        return view('frontend.about.index', compact('experiences', 'education', 'settings'));
+        $galleries = \App\Models\Gallery::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        return view('frontend.about.index', compact('experiences', 'education', 'settings', 'galleries'));
     }
 }
