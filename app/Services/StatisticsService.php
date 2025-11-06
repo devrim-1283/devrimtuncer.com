@@ -13,11 +13,11 @@ class StatisticsService
             ->distinct();
 
         if ($startDate) {
-            $query->where('viewed_at', '>=', $startDate);
+            $query->whereDate('viewed_at', '>=', $startDate);
         }
 
         if ($endDate) {
-            $query->where('viewed_at', '<=', $endDate);
+            $query->whereDate('viewed_at', '<=', $endDate);
         }
 
         return $query->count();
@@ -28,11 +28,11 @@ class StatisticsService
         $query = PageView::query();
 
         if ($startDate) {
-            $query->where('viewed_at', '>=', $startDate);
+            $query->whereDate('viewed_at', '>=', $startDate);
         }
 
         if ($endDate) {
-            $query->where('viewed_at', '<=', $endDate);
+            $query->whereDate('viewed_at', '<=', $endDate);
         }
 
         return $query->count();
@@ -46,11 +46,11 @@ class StatisticsService
             ->limit($limit);
 
         if ($startDate) {
-            $query->where('viewed_at', '>=', $startDate);
+            $query->whereDate('viewed_at', '>=', $startDate);
         }
 
         if ($endDate) {
-            $query->where('viewed_at', '<=', $endDate);
+            $query->whereDate('viewed_at', '<=', $endDate);
         }
 
         return $query->get();
@@ -59,19 +59,19 @@ class StatisticsService
     public function getViewsByDate($startDate = null, $endDate = null)
     {
         $query = PageView::select(
-            DB::raw('DATE(viewed_at) as date'),
+            DB::raw("DATE(viewed_at) as date"),
             DB::raw('COUNT(*) as views'),
             DB::raw('COUNT(DISTINCT ip_address) as unique_visitors')
         )
-            ->groupBy('date')
+            ->groupBy(DB::raw("DATE(viewed_at)"))
             ->orderBy('date', 'asc');
 
         if ($startDate) {
-            $query->where('viewed_at', '>=', $startDate);
+            $query->whereDate('viewed_at', '>=', $startDate);
         }
 
         if ($endDate) {
-            $query->where('viewed_at', '<=', $endDate);
+            $query->whereDate('viewed_at', '<=', $endDate);
         }
 
         return $query->get();

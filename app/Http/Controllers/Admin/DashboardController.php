@@ -27,8 +27,8 @@ class DashboardController extends Controller
             'active_portfolios' => Portfolio::where('is_active', true)->count(),
             'unread_messages' => Message::where('is_read', false)->count(),
             'total_messages' => Message::count(),
-            'unique_visitors_today' => $this->statisticsService->getUniqueVisitorsCount(now()->startOfDay()),
-            'page_views_today' => $this->statisticsService->getPageViewsCount(now()->startOfDay()),
+            'unique_visitors_today' => $this->statisticsService->getUniqueVisitorsCount(now()->startOfDay(), now()->endOfDay()),
+            'page_views_today' => $this->statisticsService->getPageViewsCount(now()->startOfDay(), now()->endOfDay()),
         ];
 
         $recentMessages = Message::orderBy('created_at', 'desc')
