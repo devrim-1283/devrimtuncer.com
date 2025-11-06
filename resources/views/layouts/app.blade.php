@@ -46,7 +46,7 @@
         <!-- Contact Form Section -->
         <section class="py-16 bg-gray-50">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center mb-8">Contact Me</h2>
+                <h2 class="text-3xl font-bold text-center mb-8">{{ __('messages.contact_me') }}</h2>
                 <form action="{{ route('contact.store', ['locale' => app()->getLocale()]) }}" method="POST" class="bg-white rounded-lg shadow-md p-8">
                     @csrf
                     
@@ -68,39 +68,39 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.first_name') }} *</label>
                             <input type="text" name="first_name" value="{{ old('first_name') }}" required class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.last_name') }} *</label>
                             <input type="text" name="last_name" value="{{ old('last_name') }}" required class="w-full px-4 py-2 border rounded-lg">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.phone') }}</label>
                             <input type="tel" name="phone" value="{{ old('phone') }}" class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.email') }} *</label>
                             <input type="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-2 border rounded-lg">
                         </div>
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.subject') }} *</label>
                         <input type="text" name="subject" value="{{ old('subject') }}" required class="w-full px-4 py-2 border rounded-lg">
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('messages.message') }} *</label>
                         <textarea name="message" rows="6" required class="w-full px-4 py-2 border rounded-lg">{{ old('message') }}</textarea>
                     </div>
 
                     <div class="text-center">
                         <button type="submit" class="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                            Send Message
+                            {{ __('messages.send_message') }}
                         </button>
                     </div>
                 </form>
@@ -111,7 +111,7 @@
                 @endphp
                 @if($location_map_url)
                 <div class="mt-8">
-                    <h3 class="text-2xl font-bold text-center mb-4">Location</h3>
+                    <h3 class="text-2xl font-bold text-center mb-4">{{ __('messages.location') }}</h3>
                     @if($location_address)
                     <p class="text-center text-gray-600 mb-4">{{ $location_address }}</p>
                     @endif
@@ -160,7 +160,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Contact</h3>
+                    <h3 class="text-lg font-bold mb-4">{{ __('messages.contact') }}</h3>
                     @php
                         $email = \App\Models\Setting::get('email', 'info@devrimtuncer.com');
                         $phone = \App\Models\Setting::get('phone');
@@ -186,7 +186,7 @@
             @endphp
             @if($location_map_url)
             <div class="mt-8">
-                <h3 class="text-lg font-bold mb-4 text-white">Location</h3>
+                <h3 class="text-lg font-bold mb-4 text-white">{{ __('messages.location') }}</h3>
                 <div style="height: 250px; width: 100%; border-radius: 8px; overflow: hidden;">
                     <iframe src="{{ $location_map_url }}" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>

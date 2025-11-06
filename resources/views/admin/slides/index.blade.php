@@ -30,14 +30,14 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     @if($slide->image_desktop)
-                    <img src="{{ asset('storage/' . $slide->image_desktop) }}" alt="Desktop" class="w-20 h-12 object-cover rounded">
+                    <img src="{{ storage_asset($slide->image_desktop) }}" alt="Desktop" class="w-20 h-12 object-cover rounded">
                     @else
                     <span class="text-gray-400">No image</span>
                     @endif
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     @if($slide->image_mobile)
-                    <img src="{{ asset('storage/' . $slide->image_mobile) }}" alt="Mobile" class="w-20 h-12 object-cover rounded">
+                    <img src="{{ storage_asset($slide->image_mobile) }}" alt="Mobile" class="w-20 h-12 object-cover rounded">
                     @else
                     <span class="text-gray-400">No image</span>
                     @endif

@@ -36,7 +36,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Desktop Image</label>
             @if($slide->image_desktop)
             <div class="mb-2">
-                <img src="{{ asset('storage/' . $slide->image_desktop) }}" alt="Current desktop image" class="w-64 h-32 object-cover rounded">
+                <img src="{{ storage_asset($slide->image_desktop) }}" alt="Current desktop image" class="w-64 h-32 object-cover rounded">
             </div>
             @endif
             <input type="file" name="image_desktop" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
@@ -47,7 +47,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Mobile Image</label>
             @if($slide->image_mobile)
             <div class="mb-2">
-                <img src="{{ asset('storage/' . $slide->image_mobile) }}" alt="Current mobile image" class="w-32 h-48 object-cover rounded">
+                <img src="{{ storage_asset($slide->image_mobile) }}" alt="Current mobile image" class="w-32 h-48 object-cover rounded">
             </div>
             @endif
             <input type="file" name="image_mobile" accept="image/*" class="w-full px-4 py-2 border rounded-lg">

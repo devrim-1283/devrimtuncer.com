@@ -79,7 +79,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Featured Image</label>
             @if($blog->featured_image)
             <div class="mb-2">
-                <img src="{{ asset('storage/' . $blog->featured_image) }}" alt="Current image" class="w-32 h-32 object-cover rounded">
+                <img src="{{ storage_asset($blog->featured_image) }}" alt="Current image" class="w-32 h-32 object-cover rounded">
             </div>
             @endif
             <input type="file" name="featured_image" accept="image/*" class="w-full px-4 py-2 border rounded-lg">

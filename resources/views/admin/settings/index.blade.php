@@ -76,7 +76,7 @@
         <div class="mb-8">
             @if(isset($settings['cv_file']) && $settings['cv_file'])
             <div class="mb-2">
-                <p class="text-sm text-gray-600">Current CV: <a href="{{ asset('storage/' . $settings['cv_file']) }}" target="_blank" class="text-blue-600 hover:underline">View</a></p>
+                <p class="text-sm text-gray-600">Current CV: <a href="{{ storage_asset($settings['cv_file']) }}" target="_blank" class="text-blue-600 hover:underline">View</a></p>
             </div>
             @endif
             <label class="block text-sm font-medium text-gray-700 mb-2">Upload New CV (PDF)</label>

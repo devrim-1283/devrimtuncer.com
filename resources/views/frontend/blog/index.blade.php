@@ -4,16 +4,16 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h1 class="text-4xl font-bold mb-8">Blog</h1>
+    <h1 class="text-4xl font-bold mb-8">{{ __('messages.blog') }}</h1>
 
     <!-- Filters -->
     <div class="mb-8 flex flex-wrap gap-4">
         <div class="flex-1 min-w-[200px]">
-            <input type="text" id="searchInput" placeholder="Search..." class="w-full px-4 py-2 border rounded-lg">
+            <input type="text" id="searchInput" placeholder="{{ __('messages.search') }}..." class="w-full px-4 py-2 border rounded-lg">
         </div>
         @if($categories->count() > 0)
         <select id="categoryFilter" class="px-4 py-2 border rounded-lg">
-            <option value="">All Categories</option>
+            <option value="">{{ __('messages.all_categories') }}</option>
             @foreach($categories as $category)
             <option value="{{ $category->slug }}">{{ $category->name }}</option>
             @endforeach
@@ -39,14 +39,14 @@
                 </h2>
                 <p class="text-gray-600 mb-4">{{ Str::limit($blog->excerpt, 150) }}</p>
                 <div class="flex items-center justify-between text-sm text-gray-500">
-                    <span>{{ $blog->reading_time }} min read</span>
+                    <span>{{ $blog->reading_time }} {{ __('messages.min_read') }}</span>
                     <span>{{ $blog->published_at->format('M d, Y') }}</span>
                 </div>
             </div>
         </article>
         @empty
         <div class="col-span-full text-center py-12">
-            <p class="text-gray-500 text-lg">No blog posts found.</p>
+            <p class="text-gray-500 text-lg">{{ __('messages.no_blog_posts') }}</p>
         </div>
         @endforelse
     </div>
