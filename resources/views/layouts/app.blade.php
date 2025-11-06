@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(config('app.env') === 'production' || str_starts_with(config('app.url'), 'https://'))
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    @endif
     
     <title>@yield('title', 'Devrim Tuncer')</title>
     
