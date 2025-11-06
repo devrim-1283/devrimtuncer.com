@@ -3,79 +3,164 @@
 @section('page-title', 'Edit Slide')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Edit Slide</h1>
+<div class="max-w-5xl mx-auto space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">Edit Slide</h1>
+            <p class="text-gray-600 mt-1">Update slide information and images</p>
+        </div>
+        <a href="{{ route('admin.slides.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Back to Slides
+        </a>
+    </div>
 
-    <form action="{{ route('admin.slides.update', $slide->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-lg shadow p-6">
+    <!-- Form -->
+    <form action="{{ route('admin.slides.update', $slide->id) }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
         @csrf
         @method('PUT')
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Title (TR)</label>
-                <input type="text" name="title_tr" value="{{ old('title_tr', $slide->title_tr) }}" class="w-full px-4 py-2 border rounded-lg">
+        <!-- Title Fields -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Slide Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Title (Turkish)
+                    </label>
+                    <input type="text" name="title_tr" value="{{ old('title_tr', $slide->title_tr) }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    @error('title_tr') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Title (English)
+                    </label>
+                    <input type="text" name="title_en" value="{{ old('title_en', $slide->title_en) }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    @error('title_en') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Title (EN)</label>
-                <input type="text" name="title_en" value="{{ old('title_en', $slide->title_en) }}" class="w-full px-4 py-2 border rounded-lg">
+        </div>
+
+        <!-- Text Overlay Fields -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Text Overlay</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Text Overlay (Turkish)
+                    </label>
+                    <textarea name="text_tr" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">{{ old('text_tr', $slide->text_tr) }}</textarea>
+                    @error('text_tr') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Text Overlay (English)
+                    </label>
+                    <textarea name="text_en" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">{{ old('text_en', $slide->text_en) }}</textarea>
+                    @error('text_en') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Text Overlay (TR)</label>
-                <textarea name="text_tr" rows="3" class="w-full px-4 py-2 border rounded-lg">{{ old('text_tr', $slide->text_tr) }}</textarea>
+        <!-- Image Uploads -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Images</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Desktop Image
+                    </label>
+                    @if($slide->image_desktop)
+                    <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-600 mb-2">Current Image:</p>
+                        <img src="{{ storage_asset($slide->image_desktop) }}" alt="Current desktop image" class="w-full h-48 object-cover rounded-lg shadow-md border-2 border-gray-200">
+                    </div>
+                    @endif
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition-colors">
+                        <div class="space-y-1 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-gray-600">
+                                <label class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                    <span>Upload new file</span>
+                                    <input type="file" name="image_desktop" accept="image/*" class="sr-only">
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                        </div>
+                    </div>
+                    @error('image_desktop') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Mobile Image
+                    </label>
+                    @if($slide->image_mobile)
+                    <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-600 mb-2">Current Image:</p>
+                        <img src="{{ storage_asset($slide->image_mobile) }}" alt="Current mobile image" class="w-full h-48 object-cover rounded-lg shadow-md border-2 border-gray-200">
+                    </div>
+                    @endif
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition-colors">
+                        <div class="space-y-1 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-gray-600">
+                                <label class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                    <span>Upload new file</span>
+                                    <input type="file" name="image_mobile" accept="image/*" class="sr-only">
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                        </div>
+                    </div>
+                    @error('image_mobile') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Text Overlay (EN)</label>
-                <textarea name="text_en" rows="3" class="w-full px-4 py-2 border rounded-lg">{{ old('text_en', $slide->text_en) }}</textarea>
+        </div>
+
+        <!-- Additional Settings -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">Additional Settings</h2>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Link URL
+                    </label>
+                    <input type="url" name="link" value="{{ old('link', $slide->link) }}" placeholder="https://example.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    @error('link') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div class="flex items-center space-x-6">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" name="is_active" value="1" {{ old('is_active', $slide->is_active) ? 'checked' : '' }} class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                        <span class="ml-3 text-sm font-semibold text-gray-700">Active</span>
+                    </label>
+                    <div class="flex-1">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Sort Order
+                        </label>
+                        <input type="number" name="sort_order" value="{{ old('sort_order', $slide->sort_order) }}" class="w-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Desktop Image</label>
-            @if($slide->image_desktop)
-            <div class="mb-2">
-                <img src="{{ storage_asset($slide->image_desktop) }}" alt="Current desktop image" class="w-64 h-32 object-cover rounded">
-            </div>
-            @endif
-            <input type="file" name="image_desktop" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
-            @error('image_desktop') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-        </div>
-
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Mobile Image</label>
-            @if($slide->image_mobile)
-            <div class="mb-2">
-                <img src="{{ storage_asset($slide->image_mobile) }}" alt="Current mobile image" class="w-32 h-48 object-cover rounded">
-            </div>
-            @endif
-            <input type="file" name="image_mobile" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
-            @error('image_mobile') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-        </div>
-
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Link</label>
-            <input type="url" name="link" value="{{ old('link', $slide->link) }}" class="w-full px-4 py-2 border rounded-lg">
-        </div>
-
-        <div class="mb-6 flex items-center">
-            <label class="flex items-center">
-                <input type="checkbox" name="is_active" value="1" {{ old('is_active', $slide->is_active) ? 'checked' : '' }} class="mr-2">
-                <span>Active</span>
-            </label>
-        </div>
-
-        <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Sort Order</label>
-            <input type="number" name="sort_order" value="{{ old('sort_order', $slide->sort_order) }}" class="w-full px-4 py-2 border rounded-lg">
-        </div>
-
-        <div class="flex justify-end space-x-4">
-            <a href="{{ route('admin.slides.index') }}" class="px-6 py-2 border rounded-lg hover:bg-gray-50">Cancel</a>
-            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Update Slide</button>
+        <!-- Form Actions -->
+        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+            <a href="{{ route('admin.slides.index') }}" class="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
+                Cancel
+            </a>
+            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 transform hover:scale-105">
+                Update Slide
+            </button>
         </div>
     </form>
 </div>
 @endsection
-

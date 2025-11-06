@@ -25,11 +25,11 @@
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                    <a href="{{ route('blog.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">Blog</a>
-                    <a href="{{ route('portfolio.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">Portfolio</a>
-                    <a href="{{ route('tools.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">Tools</a>
-                    <a href="{{ route('about.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">About</a>
+                    <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">{{ __('messages.home') }}</a>
+                    <a href="{{ route('blog.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">{{ __('messages.blog') }}</a>
+                    <a href="{{ route('portfolio.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">{{ __('messages.portfolio') }}</a>
+                    <a href="{{ route('tools.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">{{ __('messages.tools') }}</a>
+                    <a href="{{ route('about.index', ['locale' => app()->getLocale()]) }}" class="px-3 py-2 rounded-md text-sm font-medium">{{ __('messages.about') }}</a>
                     <div class="flex items-center space-x-2">
                         <a href="{{ str_replace('/' . app()->getLocale(), '/tr', request()->url()) }}" class="px-2 py-1 rounded text-sm {{ app()->getLocale() === 'tr' ? 'bg-blue-500 text-white' : 'text-gray-600' }}">TR</a>
                         <a href="{{ str_replace('/' . app()->getLocale(), '/en', request()->url()) }}" class="px-2 py-1 rounded text-sm {{ app()->getLocale() === 'en' ? 'bg-blue-500 text-white' : 'text-gray-600' }}">EN</a>
@@ -130,10 +130,10 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <h3 class="text-lg font-bold mb-4">Devrim Tuncer</h3>
-                    <p class="text-gray-400">Freelancer Developer</p>
+                    <p class="text-gray-400">{{ __('messages.freelancer_developer') }}</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Links</h3>
+                    <h3 class="text-lg font-bold mb-4">{{ __('messages.links') }}</h3>
                     <ul class="space-y-2">
                         @php
                             $instagram = \App\Models\Setting::get('instagram_url');
@@ -193,7 +193,7 @@
             </div>
             @endif
             <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-                <p>&copy; {{ date('Y') }} Devrim Tuncer. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} Devrim Tuncer. {{ __('messages.all_rights_reserved') }}</p>
             </div>
         </div>
     </footer>

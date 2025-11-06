@@ -55,5 +55,8 @@ return [
     'mission' => 'Mission',
     'why_me' => 'Why Me?',
     'tax_certificate' => 'Tax Certificate',
+    'freelancer_developer' => 'Freelancer Developer',
+    'links' => 'Links',
+    'all_rights_reserved' => 'All rights reserved.',
 ];
 

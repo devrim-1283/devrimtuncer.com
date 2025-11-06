@@ -56,7 +56,8 @@ class SlideController extends Controller
         $slide = Slide::create($validated);
 
         // Log activity
-        $this->logActivity('create', $slide, "Created slide: {$slide->title_en ?? 'Slide #' . $slide->id}");
+        $slideTitle = $slide->title_en ?? ('Slide #' . $slide->id);
+        $this->logActivity('create', $slide, "Created slide: {$slideTitle}");
 
         return redirect()->route('admin.slides.index')->with('success', 'Slide created successfully');
     }
@@ -118,7 +119,8 @@ class SlideController extends Controller
         $slide->update($validated);
 
         // Log activity
-        $this->logActivity('update', $slide, "Updated slide: {$slide->title_en ?? 'Slide #' . $slide->id}", $oldValues, $slide->fresh()->toArray());
+        $slideTitle = $slide->title_en ?? ('Slide #' . $slide->id);
+        $this->logActivity('update', $slide, "Updated slide: {$slideTitle}", $oldValues, $slide->fresh()->toArray());
 
         return redirect()->route('admin.slides.index')->with('success', 'Slide updated successfully');
     }

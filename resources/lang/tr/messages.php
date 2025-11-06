@@ -55,5 +55,8 @@ return [
     'mission' => 'Misyon',
     'why_me' => 'Neden Ben?',
     'tax_certificate' => 'Vergi Levhası',
+    'freelancer_developer' => 'Freelancer Geliştirici',
+    'links' => 'Bağlantılar',
+    'all_rights_reserved' => 'Tüm hakları saklıdır.',
 ];
 
