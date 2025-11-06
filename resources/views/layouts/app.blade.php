@@ -178,19 +178,14 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="flex items-center space-x-2 group">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <span class="text-white font-bold text-lg">DT</span>
-                        </div>
-                        <span class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-blue-700 transition-all duration-300">Devrim Tuncer</span>
+                    <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="flex items-center space-x-3 group">
+                        <img src="{{ asset('favicon.ico') }}" alt="Devrim Tunçer" class="w-10 h-10 transform group-hover:scale-110 transition-transform duration-300">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-blue-700 transition-all duration-300">Devrim Tunçer</span>
                     </a>
                 </div>
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="nav-link px-4 py-2 text-sm font-semibold text-gray-700 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 {{ request()->routeIs('home') ? 'text-blue-600 bg-blue-50' : '' }}">
-                        {{ __('messages.home') }}
-                    </a>
                     <a href="{{ route('blog.index', ['locale' => app()->getLocale()]) }}" class="nav-link px-4 py-2 text-sm font-semibold text-gray-700 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 {{ request()->routeIs('blog.*') ? 'text-blue-600 bg-blue-50' : '' }}">
                         {{ __('messages.blog') }}
                     </a>
@@ -203,28 +198,41 @@
                     <a href="{{ route('about.index', ['locale' => app()->getLocale()]) }}" class="nav-link px-4 py-2 text-sm font-semibold text-gray-700 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 {{ request()->routeIs('about.*') ? 'text-blue-600 bg-blue-50' : '' }}">
                         {{ __('messages.about') }}
                     </a>
+                    <a href="{{ route('contact.index', ['locale' => app()->getLocale()]) }}" class="nav-link px-4 py-2 text-sm font-semibold text-gray-700 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 {{ request()->routeIs('contact.*') ? 'text-blue-600 bg-blue-50' : '' }}">
+                        {{ __('messages.contact') }}
+                    </a>
                 </div>
 
                 <!-- Language Switcher & Mobile Menu -->
                 <div class="flex items-center space-x-3">
                     <!-- Language Dropdown -->
-                    <div class="relative group">
+                    <div class="relative language-dropdown-container">
                         <button id="languageToggle" class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                             @if(app()->getLocale() === 'tr')
-                            <span class="flag-icon" style="background: linear-gradient(to bottom, #E30A17 0%, #E30A17 33%, #FFFFFF 33%, #FFFFFF 66%, #E30A17 66%); display: inline-block; width: 24px; height: 18px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span>
+                            <svg class="w-6 h-5" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="900" height="600" fill="#E30A17"/>
+                                <circle cx="425" cy="300" r="120" fill="#fff"/>
+                                <circle cx="460" cy="300" r="100" fill="#E30A17"/>
+                                <polygon points="580,220 560,280 600,245 540,245 580,280" fill="#fff" transform="rotate(0 580 250)"/>
+                            </svg>
                             @else
                             <span class="flag-icon" style="background: linear-gradient(to bottom, #012169 0%, #012169 40%, #FFFFFF 40%, #FFFFFF 60%, #C8102E 60%); display: inline-block; width: 24px; height: 18px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); position: relative;">
                                 <span style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%), linear-gradient(-45deg, transparent 48%, #FFFFFF 48%, #FFFFFF 52%, transparent 52%);"></span>
                             </span>
                             @endif
                             <span class="text-sm font-semibold text-gray-700 uppercase">{{ app()->getLocale() }}</span>
-                            <svg class="w-4 h-4 text-gray-600 transform transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 text-gray-600 transition-transform duration-300 language-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                        <div id="languageDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden language-dropdown opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                        <div id="languageDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden language-dropdown opacity-0 invisible transition-all duration-300 transform translate-y-2 pointer-events-none">
                             <a href="{{ str_replace('/' . app()->getLocale(), '/tr', request()->url()) }}" class="flex items-center space-x-3 px-4 py-3 hover:bg-blue-50 transition-colors duration-200 {{ app()->getLocale() === 'tr' ? 'bg-blue-50 border-l-4 border-blue-600' : '' }}">
-                                <span class="flag-icon" style="background: linear-gradient(to bottom, #E30A17 0%, #E30A17 33%, #FFFFFF 33%, #FFFFFF 66%, #E30A17 66%); display: inline-block; width: 24px; height: 18px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span>
+                                <svg class="w-6 h-5" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="900" height="600" fill="#E30A17"/>
+                                    <circle cx="425" cy="300" r="120" fill="#fff"/>
+                                    <circle cx="460" cy="300" r="100" fill="#E30A17"/>
+                                    <polygon points="580,220 560,280 600,245 540,245 580,280" fill="#fff" transform="rotate(0 580 250)"/>
+                                </svg>
                                 <span class="text-sm font-semibold text-gray-700">Türkçe</span>
                                 @if(app()->getLocale() === 'tr')
                                 <svg class="w-5 h-5 text-blue-600 ml-auto" fill="currentColor" viewBox="0 0 20 20">
@@ -267,10 +275,8 @@
         <!-- Mobile Menu Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 mb-4">
             <div class="flex items-center space-x-2">
-                <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-lg">
-                    <span class="text-white font-bold text-sm">DT</span>
-                </div>
-                <span class="text-lg font-bold text-gray-900">Devrim Tuncer</span>
+                <img src="{{ asset('favicon.ico') }}" alt="Devrim Tunçer" class="w-8 h-8">
+                <span class="text-lg font-bold text-gray-900">Devrim Tunçer</span>
             </div>
             <button id="closeMobileMenu" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
                 <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,12 +287,6 @@
 
         <!-- Mobile Navigation Links -->
         <div class="flex-1">
-            <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" class="flex items-center space-x-3 px-6 py-4 text-gray-700 hover:text-blue-600 transition-all duration-300 {{ request()->routeIs('home') ? 'text-blue-600 bg-gradient-to-r from-blue-50 to-transparent border-l-4 border-blue-600' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                </svg>
-                <span class="font-semibold">{{ __('messages.home') }}</span>
-            </a>
             <a href="{{ route('blog.index', ['locale' => app()->getLocale()]) }}" class="flex items-center space-x-3 px-6 py-4 text-gray-700 hover:text-blue-600 transition-all duration-300 {{ request()->routeIs('blog.*') ? 'text-blue-600 bg-gradient-to-r from-blue-50 to-transparent border-l-4 border-blue-600' : '' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
@@ -312,6 +312,12 @@
                 </svg>
                 <span class="font-semibold">{{ __('messages.about') }}</span>
             </a>
+            <a href="{{ route('contact.index', ['locale' => app()->getLocale()]) }}" class="flex items-center space-x-3 px-6 py-4 text-gray-700 hover:text-blue-600 transition-all duration-300 {{ request()->routeIs('contact.*') ? 'text-blue-600 bg-gradient-to-r from-blue-50 to-transparent border-l-4 border-blue-600' : '' }}">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span class="font-semibold">{{ __('messages.contact') }}</span>
+            </a>
         </div>
 
         <!-- Mobile Language Switcher -->
@@ -319,7 +325,12 @@
             <p class="text-xs font-semibold text-gray-500 uppercase mb-3">Language</p>
             <div class="space-y-2">
                 <a href="{{ str_replace('/' . app()->getLocale(), '/tr', request()->url()) }}" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 {{ app()->getLocale() === 'tr' ? 'bg-blue-50 border-2 border-blue-600' : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent' }}">
-                    <span class="flag-icon" style="background: linear-gradient(to bottom, #E30A17 0%, #E30A17 33%, #FFFFFF 33%, #FFFFFF 66%, #E30A17 66%); display: inline-block; width: 28px; height: 20px; border-radius: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></span>
+                    <svg class="w-7 h-5" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" style="border-radius: 3px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        <rect width="900" height="600" fill="#E30A17"/>
+                        <circle cx="425" cy="300" r="120" fill="#fff"/>
+                        <circle cx="460" cy="300" r="100" fill="#E30A17"/>
+                        <polygon points="580,220 560,280 600,245 540,245 580,280" fill="#fff" transform="rotate(0 580 250)"/>
+                    </svg>
                     <span class="font-semibold text-gray-700 flex-1">Türkçe</span>
                     @if(app()->getLocale() === 'tr')
                     <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
@@ -432,7 +443,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Devrim Tuncer</h3>
+                    <h3 class="text-lg font-bold mb-4">Devrim Tunçer</h3>
                     <p class="text-gray-400">{{ __('messages.freelancer_developer') }}</p>
                 </div>
                 <div>
@@ -496,7 +507,7 @@
             </div>
             @endif
             <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-                <p>&copy; {{ date('Y') }} Devrim Tuncer. {{ __('messages.all_rights_reserved') }}</p>
+                <p>&copy; {{ date('Y') }} Devrim Tunçer. {{ __('messages.all_rights_reserved') }}</p>
             </div>
         </div>
     </footer>
@@ -559,25 +570,58 @@
             }
         });
 
-        // Language dropdown click handler for mobile
-        document.getElementById('languageToggle')?.addEventListener('click', function(e) {
+        // Language dropdown functionality
+        const languageToggle = document.getElementById('languageToggle');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const languageContainer = document.querySelector('.language-dropdown-container');
+        const languageArrow = document.querySelector('.language-arrow');
+        let isDropdownOpen = false;
+
+        function openLanguageDropdown() {
+            languageDropdown.classList.remove('opacity-0', 'invisible', 'translate-y-2');
+            languageDropdown.classList.add('pointer-events-auto');
+            languageArrow?.classList.add('rotate-180');
+            isDropdownOpen = true;
+        }
+
+        function closeLanguageDropdown() {
+            languageDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
+            languageDropdown.classList.remove('pointer-events-auto');
+            languageArrow?.classList.remove('rotate-180');
+            isDropdownOpen = false;
+        }
+
+        // Toggle on click
+        languageToggle?.addEventListener('click', function(e) {
             e.stopPropagation();
-            const dropdown = document.getElementById('languageDropdown');
-            if (window.innerWidth <= 768) {
-                dropdown.classList.toggle('opacity-0');
-                dropdown.classList.toggle('invisible');
+            if (isDropdownOpen) {
+                closeLanguageDropdown();
+            } else {
+                openLanguageDropdown();
             }
         });
 
-        // Close language dropdown when clicking outside
+        // Hover on desktop
+        if (window.innerWidth > 768) {
+            languageContainer?.addEventListener('mouseenter', openLanguageDropdown);
+            languageContainer?.addEventListener('mouseleave', closeLanguageDropdown);
+        }
+
+        // Close when clicking outside
         document.addEventListener('click', function(event) {
-            const toggle = document.getElementById('languageToggle');
-            const dropdown = document.getElementById('languageDropdown');
-            if (dropdown && toggle && !dropdown.contains(event.target) && !toggle.contains(event.target)) {
-                if (window.innerWidth <= 768) {
-                    dropdown.classList.add('opacity-0');
-                    dropdown.classList.add('invisible');
-                }
+            if (languageContainer && !languageContainer.contains(event.target)) {
+                closeLanguageDropdown();
+            }
+        });
+
+        // Update hover behavior on resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                languageContainer?.addEventListener('mouseenter', openLanguageDropdown);
+                languageContainer?.addEventListener('mouseleave', closeLanguageDropdown);
+            } else {
+                languageContainer?.removeEventListener('mouseenter', openLanguageDropdown);
+                languageContainer?.removeEventListener('mouseleave', closeLanguageDropdown);
             }
         });
     </script>

@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
+    public function index()
+    {
+        return view('frontend.contact.index');
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

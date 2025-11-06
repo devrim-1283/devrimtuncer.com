@@ -36,6 +36,7 @@ Route::prefix('{locale}')->where(['locale' => 'tr|en'])->group(function () {
     Route::get('/portfolio/{id}/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
     Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/contact', [ContactController::class, 'store'])->middleware('rate.limit')->name('contact.store');
 });
 
